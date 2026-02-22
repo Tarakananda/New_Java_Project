@@ -26,8 +26,12 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
-            }
+                sh '''
+                export PATH=/opt/homebrew/bin:$PATH
+                docker --version
+                docker build -t tarakananda/employee-service:1.0 .
+                '''
+            } 
         }
 
         stage('Push Docker Image') {
