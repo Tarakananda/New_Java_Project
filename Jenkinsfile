@@ -36,12 +36,23 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'PASS')]) {
-                    sh 'docker login -u tarakananda -p $PASS'
-                    sh 'docker push $DOCKER_IMAGE'
-                }
-            }
+                withCredentials([usernamePassword(
+                credentialsId: 'dockerhub-pass',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_PASS'
+                )]) {
+            sh '''
+            export PATH=/opt/homebrew/bin:$PATH
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push tarakananda/employee-service:1.0
+            '''
         }
     }
 }
+
+
+
+      }
+    
+    }
 
