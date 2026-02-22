@@ -13,7 +13,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/Tarakananda/New_Java_Project.git'
+              git branch: 'main',
+                url: 'https://github.com/Tarakananda/New_Java_Project.git'
             }
         }
 
